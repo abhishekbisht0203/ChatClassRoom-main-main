@@ -1,0 +1,185 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-100 flex flex-col">
+
+  <!-- Navbar -->
+  <nav class="bg-white shadow md:ml-64">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <!-- Branding -->
+        <div class="flex items-center">
+          <a href="#" class="text-2xl font-semibold text-blue-600">My Dashboard</a>
+        </div>
+        <!-- Mobile menu button-->
+        <div class="-mr-2 flex md:hidden">
+          <button onclick="toggleSidebar()" type="button"
+            class="inline-flex items-center justify-center p-2 rounded-md text-gray-600 hover:text-white hover:bg-gray-600 focus:outline-none focus:bg-gray-600 focus:text-white"
+            aria-controls="mobile-menu" aria-expanded="false">
+            <span class="sr-only">Open main menu</span>
+            <!-- Icon when menu is closed -->
+            <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+            </svg>
+            <!-- Icon when menu is open -->
+            <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Sidebar -->
+  <div id="sidebar"
+    class="fixed top-0 inset-y-0 left-0 w-64 h-full bg-white border-r border-gray-200 z-30 transform -translate-x-full md:translate-x-0 transition-transform duration-200 ease-in-out md:inset-auto md:flex md:flex-col md:w-64">
+    <div class="h-full flex flex-col p-4">
+      <h2 class="text-xl font-semibold text-gray-800 mb-4">User Menu</h2>
+      <nav class="flex-grow">
+        <a href="#"
+          class="block px-4 py-2 mt-2 text-sm font-medium text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200">
+          Dashboard
+        </a>
+        <a href="#" class="block px-4 py-2 mt-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-200">
+          My Notes
+        </a>
+        <a href="#" class="block px-4 py-2 mt-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-200">
+          My Questions
+        </a>
+        {% if request.user.is_superuser %}
+        <a href="{% url 'admin:index' %}"
+          class="block px-4 py-2 mt-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-200">
+          Admin Panel
+        </a>
+        {% endif %}
+      </nav>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="flex-grow p-6 bg-gray-50 md:ml-64">
+    <div class="max-w-7xl mx-auto">
+      <!-- User Info Section -->
+      <div class="bg-white p-4 rounded-lg shadow flex flex-col gap-5">
+        <!-- User Avatar and Info -->
+        <div class="flex items-center md:w-[80%]">
+          <!-- User Avatar -->
+          {% if request.user.userprofile.pfp %}
+          <img class="h-16 w-16 border-2 border-purple-600 rounded-md object-cover"
+            src="{{ request.user.userprofile.pfp.url }}" alt="User Avatar">
+          {% else %}
+          <img class="h-16 w-16 border-2 border-purple-600 rounded-md object-cover"
+            src="https://api.dicebear.com/9.x/adventurer-neutral/svg?seed={{ user.username }}" alt="User Avatar">
+          {% endif %}
+          <div class="ml-4">
+            <h2 class="text-xl font-semibold text-gray-800">Welcome, {{ request.user.username }}</h2>
+            {% if request.user.userprofile.bio %}
+            <p class="mt-1 text-sm text-gray-600 hidden md:block">{{ request.user.userprofile.bio }}</p>
+            {% else %}
+            <p class="mt-1 text-sm text-gray-600 hidden md:block">"Here curiosity gets a turbo boost and boredom takes a
+              back seat! 🚀📚"</p>
+            {% endif %}
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex gap-2 mt-4 md:mt-0 md:w-auto">
+          <a href="{% url 'account_logout' %}"
+            class="bg-red-500 text-white px-3 py-1.5 rounded-lg hover:bg-red-600 transition duration-300 shadow-md text-sm md:text-base">
+            Logout
+          </a>
+          <a href="{% url 'edit_profile' %}"
+            class="bg-blue-500 text-white px-3 py-1.5 rounded-lg hover:bg-blue-600 transition duration-300 shadow-md text-sm md:text-base">
+            Edit Profile
+          </a>
+        </div>
+      </div>
+
+
+      <!-- User Actions -->
+      <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-blue-100 p-4 rounded-lg shadow flex items-center justify-between">
+          <div>
+            <h4 class="font-semibold text-lg text-blue-600">Upload Notes</h4>
+            <p class="mt-2 text-gray-600">Share your notes with others.</p>
+          </div>
+          <a href="{% url 'create_note' %}"
+            class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Upload</a>
+        </div>
+        <div class="bg-green-100 p-4 rounded-lg shadow flex items-center justify-between">
+          <div>
+            <h4 class="font-semibold text-lg text-green-600">Upload Questions</h4>
+            <p class="mt-2 text-gray-600">Contribute questions for others to solve.</p>
+          </div>
+          <a href="{% url 'create_question' %}"
+            class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">Upload</a>
+        </div>
+        <!-- <div class="bg-purple-100 p-4 rounded-lg shadow flex items-center justify-between">
+          <div>
+            <h4 class="font-semibold text-lg text-purple-600">Manage Settings</h4>
+            <p class="mt-2 text-gray-600">Customize your profile and preferences.</p>
+          </div>
+          <a href="#" class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700">Settings</a>
+        </div> -->
+      </div>
+
+      <!-- Recent Notes -->
+      <div class="mt-8">
+        <h3 class="text-xl font-semibold text-gray-800">Recent Notes</h3>
+        <div class="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Note Card -->
+           {% if notes %}
+           {% for note in notes|slice:3 %}
+          <div class="bg-white p-4 rounded-lg shadow">
+            <h4 class="font-semibold text-lg text-blue-600 line-clamp-2">{{note.title}}</h4>
+            <p class="mt-2 text-gray-600 truncate">{{note.content}}</p>
+            <a href="#" class="mt-4 inline-block text-blue-600 hover:underline">Read more</a>
+          </div>
+          {% endfor %}
+          {% else %}
+          <div class="bg-white p-4 rounded-lg shadow">
+            <h4 class="font-semibold text-lg text-blue-600">You have not uploaded any notes yet, try it out</h4>
+            <a href="{% url 'create_note' %}" class="mt-4 inline-block text-blue-600 hover:underline">Upload Now</a>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Recent Questions -->
+      <div class="mt-8">
+        <h3 class="text-xl font-semibold text-gray-800">Recent Questions</h3>
+        <div class="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Question Card -->
+          {% if questions %}
+           {% for question in questions|slice:3 %}
+          <div class="bg-white p-4 rounded-lg shadow">
+            <h4 class="font-semibold text-lg text-blue-600 line-clamp-2">{{question.title}}</h4>
+            <p class="mt-2 text-gray-600 truncate">{{question.content}}</p>
+            <a href="#" class="mt-4 inline-block text-blue-600 hover:underline">Read more</a>
+          </div>
+          {% endfor %}
+          {% else %}
+          <div class="bg-white p-4 rounded-lg shadow">
+            <h4 class="font-semibold text-lg text-blue-600">You have not uploaded any questions yet, try it out</h4>
+            <a href="{% url 'create_question' %}" class="mt-4 inline-block text-blue-600 hover:underline">Upload Now</a>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- JavaScript for Sidebar Toggle -->
+<script>
+  function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    sidebar.classList.toggle('-translate-x-full');
+  }
+</script>
+
+{% endblock %}

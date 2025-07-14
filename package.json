@@ -1,0 +1,19 @@
+{
+  "name": "chat-class-room",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "tailwindcss build ./main/static/tailwind/tailwind.css -o ./main/static/tailwind/output.css",
+    "watch": "tailwindcss -i ./main/static/tailwind/tailwind.css -o ./main/static/tailwind/output.css --watch"
+  },
+  "devDependencies": {
+    "@tailwindcss/aspect-ratio": "^0.4.2",
+    "@tailwindcss/container-queries": "^0.1.1",
+    "@tailwindcss/forms": "^0.5.9",
+    "@tailwindcss/typography": "^0.5.15",
+    "tailwindcss": "^3.4.12"
+  },
+  "dependencies": {
+    "@tailwindcss/line-clamp": "^0.4.4",
+    "flowbite": "^2.5.1"
+  }
+}

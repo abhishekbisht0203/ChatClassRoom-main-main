@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Tailwind's typography plugin applies text-center to th by default, so we override it */
+.prose table th {
+    text-align: left; /* Align table headers to the start */
+}
+
+
+.prose table {
+    display: block;
+    overflow-x: auto;  /* Horizontal scrolling */
+}
+
+.custom-shadow{
+    box-shadow: 0px 0px 15px rgba(0, 30, 255, 0.6);
+
+}
+.custom-shadow-topics{
+    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.3);
+
+}
+.custom-shadow-chat{
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* .custom-shadow-chat:hover{
+    box-shadow: 0 0 12px #ff000056,
+    -1px -1px 12px #ff000064;
+} */
+.chatbox-content::-webkit-scrollbar {
+    width: 6px;  /* Width of the scrollbar */
+}
+.chatbox-main::-webkit-scrollbar {
+    width: 6px;  /* Width of the scrollbar */
+}
+/* Custom scrollbar for WebKit browsers (Chrome, Safari) */
+.navbar-table::-webkit-scrollbar {
+    width: 6px;  /* Width of the scrollbar */
+}
+
+/* The track (background) */
+.navbar-table::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Light grey background for the track */
+    border-radius: 10px; /* Optional: round the corners of the track */
+}
+
+/* The handle (scrollbar thumb) */
+.navbar-table::-webkit-scrollbar-thumb {
+    background-color: #888;  /* Darker grey for the thumb */
+    border-radius: 10px;     /* Round the corners of the thumb */
+    border: 2px solid #f1f1f1; /* Optional: add a border around the thumb to create padding */
+}
+
+/* Thumb hover effect */
+.navbar-table::-webkit-scrollbar-thumb:hover {
+    background-color: #555;  /* Darker shade of grey when hovered */
+}
+
+/* Apply to any element for an inner shadow */
+.inner-shadow {
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow inside */
+}
+
+/* Example variations for different effects */
+.inner-shadow-light {
+    box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.05); /* Light inner shadow */
+}
+
+.inner-shadow-dark {
+    box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.2); /* Darker inner shadow */
+}
+
+.inner-shadow-glow {
+    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.5); /* Glow effect */
+}
+
+/* To make it more dramatic or directional */
+.inner-shadow-directional {
+    box-shadow: inset -2px -4px 6px rgba(0, 0, 0, 0.15), inset 2px 4px 6px rgba(255, 255, 255, 0.1);
+}

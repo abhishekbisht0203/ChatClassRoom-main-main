@@ -1,0 +1,138 @@
+{
+  "subjects": [
+    {
+      "name": "Django Web Development",
+      "description": "A complete guide to mastering web development using the Django framework.",
+      "topics": [
+        {
+          "name": "Introduction to Django",
+          "description": "Overview of Django, its features, and the MVC architecture."
+        },
+        {
+          "name": "Setting Up the Django Environment",
+          "description": "Installing Django, setting up a virtual environment, and creating a project."
+        },
+        {
+          "name": "Django Project Structure",
+          "description": "Understanding Django's project structure, apps, and their components."
+        },
+        {
+          "name": "Django Models and ORM",
+          "description": "Creating models, using Django ORM for database operations, and migrations."
+        },
+        {
+          "name": "Django Views and Templates",
+          "description": "Function-based views (FBV), class-based views (CBV), and using templates for dynamic content."
+        },
+        {
+          "name": "Django Forms and Validations",
+          "description": "Creating forms, handling form submissions, and performing validations."
+        },
+        {
+          "name": "Django URL Routing",
+          "description": "Defining URL patterns and linking views to URLs."
+        },
+        {
+          "name": "Django Admin Interface",
+          "description": "Customizing the Django admin panel and managing models."
+        },
+        {
+          "name": "Static and Media Files in Django",
+          "description": "Serving static and media files in a Django project."
+        },
+        {
+          "name": "User Authentication in Django",
+          "description": "Implementing user authentication, login, logout, and registration."
+        },
+        {
+          "name": "Django Middleware",
+          "description": "Understanding middleware and creating custom middleware."
+        },
+        {
+          "name": "Advanced Django ORM Techniques",
+          "description": "Query optimization, aggregation, and using raw SQL queries."
+        },
+        {
+          "name": "Django Security Best Practices",
+          "description": "Implementing security measures like CSRF, XSS, and SQL injection prevention."
+        },
+        {
+          "name": "File Uploads and Management",
+          "description": "Handling file uploads and management in Django."
+        },
+        {
+          "name": "Django REST Framework (DRF)",
+          "description": "Building RESTful APIs using Django REST Framework."
+        },
+        {
+          "name": "Testing in Django",
+          "description": "Writing unit tests, integration tests, and using Django's testing tools."
+        },
+        {
+          "name": "Internationalization and Localization",
+          "description": "Translating a Django app to multiple languages."
+        },
+        {
+          "name": "Django Signals",
+          "description": "Using signals for decoupled event handling in Django."
+        },
+        {
+          "name": "Caching in Django",
+          "description": "Implementing caching strategies to optimize performance."
+        },
+        {
+          "name": "Integrating Frontend Frameworks",
+          "description": "Combining Django with frontend frameworks like React or Vue.js."
+        },
+        {
+          "name": "GraphQL with Django",
+          "description": "Building GraphQL APIs with Django and Graphene."
+        },
+        {
+          "name": "Real-time Features with Django Channels",
+          "description": "Adding real-time capabilities with WebSockets using Django Channels."
+        },
+        {
+          "name": "Django Deployment",
+          "description": "Deploying Django applications using Gunicorn, Nginx, and Docker."
+        },
+        {
+          "name": "Continuous Integration/Continuous Deployment (CI/CD)",
+          "description": "Automating deployment with tools like Jenkins, Travis CI, and GitHub Actions."
+        },
+        {
+          "name": "Django Asynchronous Views",
+          "description": "Implementing asynchronous views and optimizing performance."
+        },
+        {
+          "name": "Scaling Django Applications",
+          "description": "Scaling applications horizontally and vertically."
+        },
+        {
+          "name": "Custom Django Commands",
+          "description": "Creating custom management commands for Django applications."
+        },
+        {
+          "name": "WebSockets in Django",
+          "description": "Implementing WebSockets for real-time data communication."
+        },
+        {
+          "name": "Dockerizing Django Projects",
+          "description": "Containerizing Django applications with Docker."
+        },
+        {
+          "name": "Advanced Django Settings Management",
+          "description": "Managing settings for different environments and secrets management."
+        },
+        {
+          "name": "Building a SaaS Application with Django",
+          "description": "Designing and developing a SaaS platform using Django."
+        },
+        {
+          "name": "Practical Django Projects",
+          "description": "Building real-world applications like eCommerce, blogs, and social networks."
+        }
+      ]
+    }
+  ]
+}

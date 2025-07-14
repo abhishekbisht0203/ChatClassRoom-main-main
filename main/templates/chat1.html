@@ -1,0 +1,203 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<section class="flex flex-row p-4 bg-gray-200 gap-4 w-full h-[calc(100vh-11vh)]">
+    <div class="left flex flex-col gap-4 w-1/4 h-full bg-white rounded-xl border-[1px] border-gray-500 p-4">
+        {% for user in all_users %}
+        <div class="user-chat-item flex w-full bg-gray-200 rounded-2xl p-2 gap-4 items-center cursor-pointer custom-shadow-chat border-[1px] border-black hover:scale-[1.02]"
+            data-user-id="{{ user.id }}">
+            <div class="min-w-[20%]">
+                {% if user.userprofile.pfp %}
+                <img src="{{user.userprofile.pfp.url}}" alt=""
+                    class="h-16 w-16 rounded-full shadow-md shadow-gray-500 object-cover">
+                {% else %}
+                <img src="https://api.dicebear.com/9.x/adventurer-neutral/svg?seed={{user.username}}" alt=""
+                    class="h-16 w-16 rounded-full shadow-md shadow-gray-500 object-cover">
+                {% endif %}
+            </div>
+            <div class="w-[73%] flex flex-col">
+                {% if user.first_name %}
+                <span class="text-lg font-bold text-gray-800">{{user.first_name}} {{user.last_name}}</span>
+                {% else %}
+                <span class="text-lg font-bold text-gray-800">{{user.username}}</span>
+                {% endif %}
+                <span class="text-sm font-semibold text-gray-500 line-clamp-1">This is one of my last messages you will
+                    ever see in my profile it is very big</span>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="right w-3/4 h-full bg-white rounded-xl border-[1px] border-gray-500 relative">
+        <div class="user-details"></div>
+        <div class="chatbox-main w-full h-[calc(100%-18%)] overflow-y-auto bg-white" room-id="">
+
+            <div class="chatbox-content px-4"></div>
+
+        </div>
+        <div class="sticky bottom-0 w-full">
+            <form class="relative" id="message-form">
+                <span
+                    class="absolute left-20 flex items-center justify-center text-2xl h-full w-20 rounded-r-xl bg-cyan-400"><i
+                        class="fa-regular fa-face-smile"></i></span>
+                <span
+                    class="absolute left-0 flex items-center justify-center text-2xl h-full w-20 rounded-l-xl bg-cyan-400"><i
+                        class="fa-solid fa-upload"></i></span>
+                <button type="submit" id="send"
+                    class="absolute right-0 flex items-center justify-center text-2xl h-full w-32 rounded-xl bg-cyan-400"><i
+                        class="fa-solid fa-paper-plane"></i></button>
+                <input id="message" type="text" placeholder="Message"
+                    class="w-full ps-44 px-4 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-400">
+            </form>
+        </div>
+
+    </div>
+</section>
+
+<script>
+    $(document).ready(function () {
+        const chatboxContent = $('.chatbox-content');
+        const chatboxMain = $('.chatbox-main');
+        let receiverId = null;  // Declare a global variable to store the receiver_id
+
+        let polling = null;
+
+        function startPolling() {
+            polling = setInterval(function () {
+                if (receiverId) {
+                    fetchMessages(receiverId);
+                }
+            }, 2000);
+        }
+
+        function stopPolling() {
+            clearInterval(polling);
+        }
+
+        // Start polling when user opens chat
+        $('.user-chat-item').on('click', function () {
+            startPolling();
+        });
+
+        // Stop polling when user leaves chat (if you have such functionality)
+        $('.close-chat-button').on('click', function () {
+            stopPolling();
+        });
+
+
+        // Event listener for user chat item clicks
+        $('.user-chat-item').on('click', function () {
+            receiverId = $(this).data('user-id');  // Get user-id when chat item is clicked
+            fetchMessages(receiverId);  // Load chat messages for the selected user
+        });
+
+        // Prevent form submission and handle sending message via AJAX
+        $("#message-form").on('submit', function (e) {
+            e.preventDefault();  // Prevent default form submission
+
+            const message = $("#message").val();  // Get the message content
+
+            // Check if receiverId is set
+            if (message != "" && receiverId != null) {
+                $.ajax({
+                    type: "POST",
+                    url: "{% url 'send_message' %}",
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}'  // Include the CSRF token
+                    },
+                    data: {
+                        'receiver_id': receiverId,  // Use the global variable receiverId
+                        'content': message,
+                    },
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.success) {
+                            $("#message").val('');  // Clear input field after successful send
+                            fetchMessages(receiverId);  // Reload messages after sending
+                        } else {
+                            console.log('Error: Message not sent');
+                        }
+                    },
+                    error: function (data) {
+                        console.log('Error:', data);
+                    }
+                });
+            } else {
+                console.log('Error: No receiver selected or message is empty.');
+            }
+        });
+
+        // Fetch messages between users
+        function fetchMessages(userId) {
+            $.get(`/chat/get_messages/${userId}/`, function (data) {
+                console.log(data);
+
+                // Populate user details in the header
+                const user = data.user;
+                const userHeader = `
+                <div class="user-chat-header sticky top-0 w-full z-10 flex items-center gap-4 p-4 py-2 bg-gray-100 border-b border-gray-200 rounded-t-xl">
+                    <img src="${user.profile_pic || 'https://api.dicebear.com/9.x/adventurer-neutral/svg?seed=' + user.username}" alt="${user.username}" class="h-12 w-12 rounded-full shadow-md shadow-gray-500 object-cover">
+                    <div class="flex flex-col">
+                        <span class="text-lg font-bold text-gray-800">${user.first_name || user.username} ${user.last_name || ''}</span>
+                        <span class="text-sm font-semibold text-gray-500">@${user.username}</span>
+                        <span id="user-id" user-id="${user.id}"></span>
+                    </div>
+                </div>
+            `;
+                $('.user-details').html(userHeader);  // Update user details
+
+                // Populate chat messages
+                chatboxContent.empty();  // Clear previous messages
+
+                if (data.messages.length > 0) {
+                    data.messages.forEach(function (message) {
+                        const messageDiv = `
+                        <div class="flex justify-${message.sender === '{{ request.user.username }}' ? 'start' : 'end'} items-start gap-2.5 mb-4">
+                            ${message.sender === '{{ request.user.username }}' ? `
+                                <img class="w-8 h-8 rounded-full" src="${message.sender_pfp || 'https://api.dicebear.com/9.x/adventurer-neutral/svg?seed=default'}" alt="">
+                                <div class="flex flex-col gap-1 w-fit max-w-[500px]">
+                                    <div class="flex items-center space-x-2">
+                                        <span class="text-sm font-semibold text-gray-900">${message.sender}</span>
+                                        <span class="text-sm font-normal text-gray-500">${message.sent_at}</span>
+                                    </div>
+                                    <div class="p-4 border-gray-200 bg-gray-100 rounded-e-xl">
+                                        <p class="text-sm text-gray-900">${message.content}</p>
+                                    </div>
+                                </div>`
+                                : `
+                                <div class="flex flex-col gap-1 w-fit max-w-[500px]">
+                                    <div class="flex justify-end items-center space-x-2">
+                                        <span class="text-sm font-normal text-gray-500">${message.sent_at}</span>
+                                        <span class="text-sm font-semibold text-gray-900">${message.receiver}</span>
+                                    </div>
+                                    <div class="p-4 border-gray-200 bg-gray-100 rounded-e-xl">
+                                        <p class="text-sm text-gray-900">${message.content}</p>
+                                    </div>
+                                </div>
+                                <img class="w-8 h-8 rounded-full" src="${message.receiver_pfp || 'https://api.dicebear.com/9.x/adventurer-neutral/svg?seed=default'}" alt="">
+                            `}
+                        </div>`;
+                        chatboxContent.append(messageDiv);
+                    });
+                } else {
+                    chatboxContent.html('<p class="text-center text-gray-500">No messages yet.</p>');
+                }
+
+                // Scroll to bottom after loading messages
+                scrollToBottom();
+            });
+        }
+
+        // Scroll to the bottom of the chatbox
+        function scrollToBottom() {
+            chatboxContent.scrollTop(chatboxContent[0].scrollHeight);
+            chatboxMain.scrollTop(chatboxMain[0].scrollHeight);
+        }
+    });
+
+</script>
+
+
+{% endblock %}

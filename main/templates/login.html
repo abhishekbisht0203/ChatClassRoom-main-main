@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<section class="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 h-full flex items-center justify-center">
+    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-sm">
+        <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">Welcome Back</h2>
+        <form id="login-form" method="POST" action="{% url 'login' %}">
+            {% csrf_token %}
+            <div class="mb-4">
+                <label for="username" class="block text-gray-700 font-semibold mb-2">Username</label>
+                <input type="text" id="username" name="username" required
+                    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400">
+            </div>
+            <div class="mb-4">
+                <label for="password" class="block text-gray-700 font-semibold mb-2">Password</label>
+                <input type="password" id="password" name="password" required
+                    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400">
+            </div>
+            <div class="mb-4 flex items-center justify-between">
+                <div>
+                    <input type="checkbox" id="remember_me" name="remember_me" class="mr-2 leading-tight">
+                    <label for="remember_me" class="text-gray-700">Remember Me</label>
+                </div>
+                <a href="{% url 'password_reset' %}" class="text-indigo-500 hover:text-indigo-700 text-sm">Forgot Password?</a>
+            </div>
+            <button type="submit"
+                class="w-full bg-indigo-500 text-white font-semibold py-2 rounded-lg hover:bg-indigo-600 transition duration-300">Login</button>
+        </form>
+        <p class="text-gray-600 text-center mt-6">Don't have an account?
+            <a href="{% url 'signup' %}"
+                class="text-indigo-500 hover:text-indigo-700 font-semibold">Sign Up</a>
+        </p>
+    </div>
+</section>
+
+<script>
+    document.getElementById('login-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const formData = new FormData(this);
+
+        axios.post("{% url 'login' %}", formData, {
+            headers: {
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+            }
+        })
+        .then(response => {
+            if (response.data.success) {
+                window.location.href = "{% url 'home' %}";
+            } else {
+                alert(response.data.error || "Invalid credentials");
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An unexpected error occurred.');
+        });
+    });
+</script>
+
+{% endblock %}

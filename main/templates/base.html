@@ -1,0 +1,287 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta
+      name="google-site-verification"
+      content="61nLMSl-iZcZ-gevVqS8snPsu26a2Bu_OPR1OB7ilwY"
+    />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Meta Description and Keywords for SEO -->
+    <meta
+      name="description"
+      content="ChatClassRoom: An interactive online learning platform offering comprehensive notes, questions, and resources for various subjects. Enhance your learning experience with easy-to-follow modules and engaging content."
+    />
+    <meta
+      name="keywords"
+      content="ChatClassRoom, chatclassroom, chat class room, Chat, Class, Room, online learning, educational platform, study notes, learning modules, interactive learning, education, student resources, subject notes, questions and answers"
+    />
+
+    <!-- Open Graph Meta Tags for Social Media -->
+    <meta
+      property="og:title"
+      content="ChatClassRoom - Interactive Online Learning Platform"
+    />
+    <meta
+      property="og:description"
+      content="An interactive online learning platform offering comprehensive notes, questions, and resources for various subjects. Enhance your learning experience with easy-to-follow modules and engaging content."
+    />
+    <meta property="og:image" content="{% static 'images/logo.png' %}" />
+    <meta property="og:url" content="https://lsiddharthl.pythonanywhere.com/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="ChatClassRoom" />
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="ChatClassRoom - Interactive Online Learning Platform"
+    />
+    <meta
+      name="twitter:description"
+      content="An interactive online learning platform offering comprehensive notes, questions, and resources for various subjects. Enhance your learning experience with easy-to-follow modules and engaging content."
+    />
+    <meta name="twitter:image" content="{% static 'images/logo.png' %}" />
+    <meta name="twitter:site" content="@YourTwitterHandle" />
+
+    <title>ChatClassRoom</title>
+    <!-- <link rel="manifest" href="{% static 'manifest.json' %}"> -->
+
+    <!-- <link rel="stylesheet" href="{% static 'styles.css' %}" /> -->
+    <link
+      rel="shortcut icon"
+      href="{% static 'images/logo.png' %}"
+      type="image/x-icon"
+    />
+
+    <!-- External CSS and JavaScript Libraries -->
+
+    <link rel="stylesheet" href="{% static 'src/output.css' %}" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://unpkg.com/@highlightjs/cdn-assets@11.10.0/languages/python.min.js"></script>
+
+    <script>
+      hljs.highlightAll();
+    </script>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+      integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "ChatClassRoom",
+        "url": "https://chatclassroom.onrender.com/",
+        "logo": "{% static 'images/logo.png' %}",
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "telephone": "+91 7456849590",
+          "email": "abhiyanshbisht@gmail.com",
+          "contactType": "customer service"
+        },
+        "sameAs": [
+          "https://www.linkedin.com/in/abhishek-bisht-876541308/",
+          "https://github.com/abhishekbisht0203",
+          "https://abhishekbisht0203.github.io/portfolio/"
+        ]
+      }
+    </script>
+  </head>
+
+  <!-- Google tag (gtag.js) -->
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-KH8WY6VKMC"
+  ></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+    gtag("config", "G-KH8WY6VKMC");
+  </script>
+
+  <body class="">
+    {% include "navbar.html" %}
+
+    <main class="max-w-full h-full rounded-lg">
+      {% block content %}{% endblock %}
+    </main>
+
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.4/axios.min.js"
+      integrity="sha512-6VJrgykcg/InSIutW2biLwA1Wyq+7bZmMivHw19fI+ycW0jIjsadm8wKQQLlfv3YUS4owfMDlZU38NtaAK6fSg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+
+    <script>
+      // Add debounce to delay search request until user stops typing
+      let debounceTimeout;
+      function search(query) {
+        if (query.length > 2) {
+          clearTimeout(debounceTimeout);
+          debounceTimeout = setTimeout(() => {
+            if (query) {
+              axios
+                .get(`/get_data/${query}/`)
+                .then(function (response) {
+                  let data = response.data;
+
+                  // Clear previous results and show the tables
+                  let tableBodyDesktop =
+                    document.getElementById("resultsBodyDesktop");
+                  let tableBodyMobile =
+                    document.getElementById("resultsBodyMobile");
+
+                  tableBodyDesktop.innerHTML = "";
+                  tableBodyMobile.innerHTML = "";
+
+                  // Show tables if hidden
+                  $("table").removeClass("hidden").addClass("block");
+
+                  // Helper function to add rows to both tables
+                  function addRows(items, headers, type) {
+                    items.forEach((item) => {
+                      console.log(item, headers, type);
+
+                      // Create row for desktop
+                      let rowDesktop = document.createElement("tr");
+                      rowDesktop.classList.add(
+                        "border-b-2",
+                        "border-gray-300",
+                        "hover:bg-gray-200"
+                      );
+
+                      // Create row for mobile
+                      let rowMobile = document.createElement("tr");
+                      rowMobile.classList.add(
+                        "border-b-2",
+                        "border-gray-300",
+                        "hover:bg-gray-200"
+                      );
+
+                      // Add content for both tables
+                      let cellDesktop = document.createElement("td");
+                      cellDesktop.classList.add(
+                        "py-1.5",
+                        "px-2",
+                        "line-clamp-1"
+                      );
+                      cellDesktop.textContent = item[headers[0]] || "";
+                      rowDesktop.appendChild(cellDesktop);
+
+                      let cellMobile = document.createElement("td");
+                      cellMobile.classList.add(
+                        "py-1.5",
+                        "px-2",
+                        "line-clamp-1"
+                      );
+                      cellMobile.textContent = item[headers[0]] || "";
+                      rowMobile.appendChild(cellMobile);
+
+                      // Add link logic (for notes, subjects, topics)
+                      if (
+                        type === "note" &&
+                        item.topics &&
+                        item.topics.length > 0
+                      ) {
+                        cellDesktop = document.createElement("td");
+                        cellDesktop.classList.add("py-1.5", "px-2");
+                        cellDesktop.innerHTML = `<a class="text-blue-700 underline text-nowrap" href="/notes/${item.topics[0].subject_slug}/${item.topics[0].topic_slug}/${item.auto_slug}/">Let's Go</a>`;
+                        rowDesktop.appendChild(cellDesktop);
+
+                        cellMobile = document.createElement("td");
+                        cellMobile.classList.add("py-1.5", "px-2");
+                        cellMobile.innerHTML = `<a class="text-blue-700 underline text-nowrap" href="/notes/${item.topics[0].subject_slug}/${item.topics[0].topic_slug}/${item.auto_slug}/">Let's Go</a>`;
+                        rowMobile.appendChild(cellMobile);
+                      } else if (type === "subject") {
+                        cellDesktop = document.createElement("td");
+                        cellDesktop.classList.add("py-1.5", "px-2");
+                        cellDesktop.innerHTML = `<a class="text-blue-700 underline text-nowrap" href="/topics/${item.auto_slug}/">Let's Go</a>`;
+                        rowDesktop.appendChild(cellDesktop);
+
+                        cellMobile = document.createElement("td");
+                        cellMobile.classList.add("py-1.5", "px-2");
+                        cellMobile.innerHTML = `<a class="text-blue-700 underline text-nowrap" href="/topics/${item.auto_slug}/">Let's Go</a>`;
+                        rowMobile.appendChild(cellMobile);
+                      } else if (type === "topic") {
+                        cellDesktop = document.createElement("td");
+                        cellDesktop.classList.add("py-1.5", "px-2");
+                        cellDesktop.innerHTML = `<a class="text-blue-700 underline text-nowrap" href="/topics/${item.subject__auto_slug}/detail/${item.auto_slug}/">Let's Go</a>`;
+                        rowDesktop.appendChild(cellDesktop);
+
+                        cellMobile = document.createElement("td");
+                        cellMobile.classList.add("py-1.5", "px-2");
+                        cellMobile.innerHTML = `<a class="text-blue-700 underline text-nowrap" href="/topics/${item.subject__auto_slug}/detail/${item.auto_slug}/">Let's Go</a>`;
+                        rowMobile.appendChild(cellMobile);
+                      }
+
+                      // Append rows to both tables
+                      tableBodyDesktop.appendChild(rowDesktop);
+                      tableBodyMobile.appendChild(rowMobile);
+                    });
+                  }
+
+                  // Add rows for subjects, topics, and notes
+                  if (data.subjects)
+                    addRows(data.subjects, ["name", "auto_slug"], "subject");
+                  if (data.topics)
+                    addRows(data.topics, ["name", "auto_slug"], "topic");
+                  if (data.notes)
+                    addRows(
+                      data.notes,
+                      ["title", "auto_slug", "topics"],
+                      "note"
+                    );
+                })
+                .catch(function (error) {
+                  console.log("Something went wrong:", error);
+                });
+            }
+          }, 100); // Delay search by 300ms
+        } else {
+          $("table").removeClass("block").addClass("hidden");
+        }
+      }
+    </script>
+    <!-- <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/serviceworker.js')
+                .then((registration) => {
+                    console.log('Service Worker registered:', registration);
+                }).catch((error) => {
+                    console.error('Service Worker registration failed:', error);
+                });
+        }
+    </script> -->
+
+    <script src="{% static 'flowbite.min.js' %}"></script>
+  </body>
+</html>

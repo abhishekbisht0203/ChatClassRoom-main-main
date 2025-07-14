@@ -1,0 +1,135 @@
+{
+    "subjects": [
+      {
+        "name": "Web Design",
+        "description": "An in-depth guide to mastering web design from fundamentals to advanced techniques.",
+        "topics": [
+          {
+            "name": "Introduction to Web Design",
+            "description": "Basics of web design, including principles, tools, and workflows."
+          },
+          {
+            "name": "HTML Fundamentals",
+            "description": "HTML basics, elements, attributes, and semantic markup."
+          },
+          {
+            "name": "Advanced HTML",
+            "description": "HTML5 features, multimedia, forms, and accessibility."
+          },
+          {
+            "name": "CSS Fundamentals",
+            "description": "CSS basics, selectors, properties, and box model."
+          },
+          {
+            "name": "Advanced CSS Techniques",
+            "description": "Flexbox, Grid, animations, transitions, and transformations."
+          },
+          {
+            "name": "Responsive Web Design",
+            "description": "Creating responsive designs using media queries and breakpoints."
+          },
+          {
+            "name": "CSS Preprocessors",
+            "description": "Introduction to Sass and Less for advanced styling."
+          },
+          {
+            "name": "Tailwind CSS",
+            "description": "Utility-first CSS framework for rapid UI development."
+          },
+          {
+            "name": "Bootstrap Framework",
+            "description": "Creating responsive layouts with Bootstrap components."
+          },
+          {
+            "name": "Flowbite Components",
+            "description": "Using Flowbite for pre-built components and Tailwind integration."
+          },
+          {
+            "name": "Introduction to JavaScript",
+            "description": "JavaScript basics: syntax, variables, and control structures."
+          },
+          {
+            "name": "Advanced JavaScript",
+            "description": "ES6+ features, asynchronous programming, and APIs."
+          },
+          {
+            "name": "DOM Manipulation and Events",
+            "description": "Manipulating the DOM, event handling, and event delegation."
+          },
+          {
+            "name": "JavaScript Frameworks Overview",
+            "description": "Introduction to popular frameworks like React, Vue, and Angular."
+          },
+          {
+            "name": "jQuery Fundamentals",
+            "description": "Using jQuery for simplified DOM manipulation and animations."
+          },
+          {
+            "name": "Advanced jQuery Techniques",
+            "description": "jQuery plugins, AJAX, and event handling."
+          },
+          {
+            "name": "Introduction to Web Animations",
+            "description": "Creating animations with CSS, JavaScript, and GSAP."
+          },
+          {
+            "name": "Web Performance Optimization",
+            "description": "Techniques for optimizing web performance, including lazy loading and caching."
+          },
+          {
+            "name": "Cross-Browser Compatibility",
+            "description": "Ensuring compatibility across different browsers and devices."
+          },
+          {
+            "name": "Accessibility in Web Design",
+            "description": "Designing accessible web content for all users."
+          },
+          {
+            "name": "SEO Fundamentals",
+            "description": "Basics of Search Engine Optimization for web design."
+          },
+          {
+            "name": "Web Security Basics",
+            "description": "Introduction to web security, HTTPS, and best practices."
+          },
+          {
+            "name": "Introduction to Web Development Tools",
+            "description": "Using development tools like VSCode, Git, and browser dev tools."
+          },
+          {
+            "name": "Advanced CSS Frameworks",
+            "description": "Exploring Bulma, Foundation, and Materialize for advanced styling."
+          },
+          {
+            "name": "Modern JavaScript Libraries",
+            "description": "Using libraries like Lodash, Moment.js, and D3.js."
+          },
+          {
+            "name": "Web Design for Mobile",
+            "description": "Best practices for designing mobile-first websites."
+          },
+          {
+            "name": "Web Design Trends",
+            "description": "Exploring modern trends like Neumorphism, Glassmorphism, and Dark Mode."
+          },
+          {
+            "name": "Introduction to JAMstack",
+            "description": "Building static sites with modern tools like Gatsby, Next.js, and Hugo."
+          },
+          {
+            "name": "Version Control with Git",
+            "description": "Using Git for version control and collaboration."
+          },
+          {
+            "name": "Deploying Web Projects",
+            "description": "Deploying websites using Netlify, Vercel, and traditional servers."
+          },
+          {
+            "name": "Web Design Project",
+            "description": "Capstone project to create a fully functional website."
+          }
+        ]
+      }
+    ]
+  }
+  

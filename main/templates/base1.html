@@ -1,0 +1,188 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+  <meta name="google-site-verification" content="-L0sqYxDe4dAFByRtzToDzteOs2T4j-qMOFQU70qPcI" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Meta Description and Keywords for SEO -->
+  <meta name="description"
+    content="ChatClassRoom: An interactive online learning platform offering comprehensive notes, questions, and resources for various subjects. Enhance your learning experience with easy-to-follow modules and engaging content." />
+  <meta name="keywords"
+    content="ChatClassRoom, online learning, educational platform, study notes, learning modules, interactive learning, education, student resources, subject notes, questions and answers" />
+
+  <!-- Open Graph Meta Tags for Social Media -->
+  <meta property="og:title" content="ChatClassRoom - Interactive Online Learning Platform" />
+  <meta property="og:description"
+    content="An interactive online learning platform offering comprehensive notes, questions, and resources for various subjects. Enhance your learning experience with easy-to-follow modules and engaging content." />
+  <meta property="og:image" content="{% static 'images/logo.png' %}" />
+  <meta property="og:url" content="https://chat-class-room.vercel.app/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="ChatClassRoom" />
+
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="ChatClassRoom - Interactive Online Learning Platform" />
+  <meta name="twitter:description"
+    content="An interactive online learning platform offering comprehensive notes, questions, and resources for various subjects. Enhance your learning experience with easy-to-follow modules and engaging content." />
+  <meta name="twitter:image" content="{% static 'images/logo.png' %}" />
+  <meta name="twitter:site" content="@YourTwitterHandle" />
+
+  <title>ChatClassRoom</title>
+  <link rel="stylesheet" href="{% static 'styles.css' %}" />
+  <link rel="shortcut icon" href="{% static 'images/logo.ico' %}" type="image/x-icon" />
+
+  <!-- External CSS and JavaScript Libraries -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js"
+    integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
+
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+  <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.js"></script>
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "ChatClassRoom",
+      "url": "https://chat-class-room.vercel.app/",
+      "logo": "{% static 'images/logo.png' %}",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+91 7456849590",
+        "contactType": "customer service"
+      }
+    }
+  </script>
+</head>
+
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5HXWK0XS2W"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag("js", new Date());
+
+  gtag("config", "G-5HXWK0XS2W");
+</script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+<body class="overscroll-none">
+  <!-- component -->
+  <div class="h-screen w-full bg-gray-100 relative flex overflow-hidden">
+    <!-- Sidebar -->
+    <aside
+      class="h-full w-16 flex flex-col space-y-10 items-center justify-center relative bg-white text-purple-600 shadow-lg">
+      <!-- Home -->
+      <a href="{% url 'home' %}">
+        <div
+          class="h-10 w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-white hover:bg-purple-600 hover:duration-300 hover:ease-linear focus:bg-purple-600">
+          <i class="fa-solid fa-house"></i>
+        </div>
+      </a>
+
+      <!-- Courses -->
+      <a href="{% url 'subjects' %}">
+        <div
+          class="h-10 w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-white hover:bg-purple-600 hover:duration-300 hover:ease-linear focus:bg-purple-600">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+          </svg>
+        </div>
+      </a>
+
+      <!-- Theme -->
+      <div
+        class="h-10 w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-white hover:bg-purple-600 hover:duration-300 hover:ease-linear focus:bg-purple-600">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+        </svg>
+      </div>
+
+      <!-- Configuration -->
+      <div
+        class="h-10 w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-white hover:bg-purple-600 hover:duration-300 hover:ease-linear focus:bg-purple-600">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+        </svg>
+      </div>
+    </aside>
+
+    <div class="w-full h-full flex flex-col justify-between">
+      <!-- Header -->
+      <header class="py-1 w-full flex items-center relative justify-between px-5 space-x-10 bg-white shadow-lg">
+        <!-- Logo -->
+        <a href="{% url 'home' %}" class="flex flex-row items-center justify-center">
+          <img src="{% static 'images/logo.png' %}" alt="" class="h-[4.5rem] w-[4.5rem]" />
+          <!-- Logo Text -->
+          <span class="text-2xl text-gray-500 font-extrabold tracking-wide hidden md:block">
+            ChatClassRoom
+          </span>
+        </a>
+
+        <!-- User Info -->
+        <div class="flex flex-shrink-0 items-center space-x-4 text-gray-800">
+          {% if request.user.is_authenticated %}
+          <!-- User is logged in -->
+          <div class="flex flex-col items-end">
+            <!-- Username -->
+            <div class="text-md font-medium">{{ request.user.username }}</div>
+            <!-- Email -->
+            <div class="text-sm font-regular">{{ request.user.email }}</div>
+          </div>
+          <!-- Profile Photo -->
+          <a class="" href="{% url 'dashboard' %}">
+            {% if request.user.userprofile.pfp %}
+            <img src="{{ request.user.userprofile.pfp.url }}" alt="avatar"
+              class="w-10 h-10 object-cover rounded-md mr-4" />
+            {% else %}
+            <!-- You can use Gravatar or any image rendering logic here -->
+            <img src="https://api.dicebear.com/9.x/adventurer-neutral/svg?seed={{ user.username }}" alt="avatar"
+              class="w-10 h-10 object-cover rounded-md mr-4" />
+            {% endif %}
+          </a>
+          {% else %}
+          <!-- User is not logged in -->
+          <div class="flex space-x-4">
+            <a href="{% url 'account_login' %}" class="text-sm font-medium text-purple-600">Login</a>
+            <a href="{% url 'account_signup' %}" class="text-sm font-medium text-purple-600">Signup</a>
+          </div>
+          {% endif %}
+        </div>
+      </header>
+
+      <!-- Main -->
+      <main class="max-w-full h-full flex relative overflow-y-hidden">
+        <!-- Container -->
+        <div class="h-full w-full m-4 overflow-y-scroll no-scroll rounded-lg">
+          <!-- Content Container -->
+          {% block content %}{% endblock %}
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.4/axios.min.js"
+    integrity="sha512-6VJrgykcg/InSIutW2biLwA1Wyq+7bZmMivHw19fI+ycW0jIjsadm8wKQQLlfv3YUS4owfMDlZU38NtaAK6fSg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  
+  <script src="{% static 'js/script.js' %}"></script>
+</body>
+
+</html>

@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container mx-auto my-10 px-4 lg:px-8">
+    <div class="mb-8">
+        <nav class="text-gray-700">
+            <ol class="flex items-center space-x-2">
+                <li>
+                    <a href="{% url 'subjects' %}"
+                        class="text-indigo-600 hover:text-indigo-800 transition-colors duration-300 flex items-center">
+                        <i class="fas fa-home"></i>
+                        <span class="sr-only">Home</span>
+                    </a>
+                </li>
+                <li class="flex items-center">
+                    <i class="fas fa-chevron-right"></i>
+                    <a href="{% url 'topics' subject.auto_slug %}"
+                        class="text-indigo-600 hover:text-indigo-800 transition-colors duration-300 px-2">{{subject.name}}</a>
+                </li>
+                <li class="flex items-center">
+                    <i class="fas fa-chevron-right"></i>
+                    <a href="{% url 'topic_detail' subject.auto_slug topic.auto_slug %}"
+                        class="text-indigo-600 hover:text-indigo-800 transition-colors duration-300 px-2">{{topic.name}}</a>
+                </li>
+                <li class="flex items-center">
+                    <i class="fas fa-chevron-right"></i>
+                    <span class="text-gray-500 px-2">{{ question.title }}</span>
+                </li>
+            </ol>
+        </nav>
+    </div>
+
+    <!-- question Title -->
+    <div class="mb-8 text-center">
+        <h1 class="text-2xl md:text-3xl font-semibold text-gray-900 mb-2">{{ question.title }}</h1>
+
+        <!-- Date and Author Information -->
+        <div class="flex justify-center items-center text-gray-600">
+            <p class="text-base md:text-lg border-r-2 border-gray-200 pe-2">
+                {{ question.created_at|date:"F j, Y" }}
+            </p>
+            <p class="text-base md:text-lg ps-2">
+                By <span class="font-medium text-gray-800">{{ question.uploaded_by }}</span>
+            </p>
+        </div>
+    </div>
+
+    <!-- question Content -->
+    <div id="question-content" class="prose prose-lg prose-zinc max-w-none bg-white p-2 md:p-8 rounded-lg shadow-lg">
+        
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="flex justify-between mt-10">
+        {% if previous_question %}
+        <a href="{% url 'question_detail' subject.auto_slug topic.auto_slug question.auto_slug %}"
+            class="text-indigo-600 hover:text-indigo-800 transition-colors duration-300 flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+            Previous question
+        </a>
+        {% endif %}
+
+        {% if next_question %}
+        <a href="{% url 'question_detail' subject.auto_slug topic.auto_slug question.auto_slug %}"
+            class="text-indigo-600 hover:text-indigo-800 transition-colors duration-300 flex items-center">
+            Next question
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 ml-2" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+        </a>
+        {% endif %}
+    </div>
+
+</div>
+
+
+<script>
+    // Parse the question content and insert it into the question-content div
+    var html = marked.parse("{{question.content|escapejs}}");
+
+    // Insert the parsed HTML into the designated output div
+    document.getElementById('question-content').innerHTML = html;
+
+</script>
+
+{% endblock %}

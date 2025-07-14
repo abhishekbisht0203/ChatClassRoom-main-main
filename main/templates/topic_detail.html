@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container mx-auto my-10 px-4 lg:px-0">
+    <!-- Subtopic Title -->
+    <div class="mb-8">
+        <nav class="text-gray-700">
+            <ol class="flex items-center space-x-2">
+                <li>
+                    <a href="{% url 'subjects' %}"
+                        class="text-indigo-600 hover:text-indigo-800 transition-colors duration-300 flex items-center">
+                        <i class="fas fa-home"></i>
+                        <span class="sr-only">Home</span>
+                    </a>
+                </li>
+                <li class="flex items-center">
+                    <i class="fas fa-chevron-right"></i>
+                    <a href="{% url 'topics' subject.auto_slug %}"
+                        class="text-indigo-600 hover:text-indigo-800 transition-colors duration-300 px-2">Topics</a>
+                </li>
+                <li class="flex items-center">
+                    <i class="fas fa-chevron-right"></i>
+                    <span class="text-gray-500 px-2">{{ topic.name }}</span>
+                </li>
+            </ol>
+        </nav>
+    </div>
+
+    <h2 class="text-3xl font-bold text-gray-800 mb-8">{{ topic.name }}</h2>
+    <p class="text-gray-600 mb-8">{{ topic.description }}</p>
+
+    <!-- Tabs -->
+    <div class="bg-white shadow-md rounded-lg">
+        <ul class="flex border-b">
+            <li class="flex-1">
+                <a href="#notes-tab"
+                    class="block p-4 text-center text-gray-700 border-b-2 border-transparent hover:border-indigo-600 hover:text-indigo-600 transition-all duration-300 active-tab"
+                    onclick="openTab(event, 'notes')">Notes</a>
+            </li>
+            <li class="flex-1">
+                <a href="#questions-tab"
+                    class="block p-4 text-center text-gray-700 border-b-2 border-transparent hover:border-indigo-600 hover:text-indigo-600 transition-all duration-300"
+                    onclick="openTab(event, 'questions')">Questions</a>
+            </li>
+        </ul>
+
+        <!-- Notes Tab Content -->
+        <div id="notes" class="tab-content p-8">
+            {% for note in notes %}
+            <a href="{% url 'note_detail' subject.auto_slug topic.auto_slug note.auto_slug %}" class="group">
+                <div
+                    class="mb-6 p-6 bg-white rounded-lg custom-shadow-topics transition-transform transform hover:-translate-y-1">
+
+                    <h3
+                        class="text-lg md:text-xl lg:text-2xl font-semibold text-gray-800 group-hover:text-indigo-600 transition-colors duration-300">
+                        {{ note.title }}
+                    </h3>
+
+                </div>
+            </a>
+            {% endfor %}
+
+            <div class="mt-8">
+                <h4 class="text-lg font-bold mb-2">Comments for Notes</h4>
+                {% for comment in note_comments %}
+                <div class="mb-2 p-2 border rounded">
+                    <p class="text-sm text-gray-600">{{ comment.content }} - <i>{{ comment.commented_by.username }}</i>
+                    </p>
+                    <span class="text-xs text-gray-400">{{ comment.created_at }}</span>
+                </div>
+                {% empty %}
+                <p class="text-sm text-gray-500">No comments yet. Be the first to comment!</p>
+                {% endfor %}
+                <!-- Add Comment Form for Notes -->
+                <form method="post" action="{% url 'add_note_comment' topic.id %}">
+                    {% csrf_token %}
+                    <textarea name="content" rows="2" class="w-full p-2 mt-2 border rounded"
+                        placeholder="Add a comment..."></textarea>
+                    <button type="submit"
+                        class="mt-2 px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700">Comment</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Questions Tab Content -->
+        <div id="questions" class="tab-content p-8 hidden">
+            <h3 class="text-2xl font-semibold text-gray-800 mb-6">Questions</h3>
+            {% for question in questions %}
+            <a href="{% url 'question_detail' subject.auto_slug topic.auto_slug question.auto_slug %}" class="group">
+                <div
+                    class="mb-6 p-6 bg-white rounded-lg custom-shadow-topics transition-transform transform hover:-translate-y-1">
+                    <h3
+                        class="text-lg md:text-xl lg:text-2xl font-semibold text-gray-800 group-hover:text-indigo-600 transition-colors duration-300">
+                        {{ question.title }}
+                    </h3>
+                </div>
+            </a>
+            {% endfor %}
+
+            <!-- Combined Comments for Questions -->
+            <div class="mt-8">
+                <h4 class="text-lg font-bold mb-2">Comments for Questions</h4>
+                {% for comment in question_comments %}
+                <div class="mb-2 p-2 border rounded">
+                    <p class="text-sm text-gray-600">{{ comment.content }} - <i>{{ comment.commented_by.username }}</i>
+                    </p>
+                    <span class="text-xs text-gray-400">{{ comment.created_at }}</span>
+                </div>
+                {% empty %}
+                <p class="text-sm text-gray-500">No comments yet. Be the first to comment!</p>
+                {% endfor %}
+                <!-- Add Comment Form for Questions -->
+                <form method="post" action="{% url 'add_question_comment' topic.id %}">
+                    {% csrf_token %}
+                    <textarea name="content" rows="2" class="w-full p-2 mt-2 border rounded"
+                        placeholder="Add a comment..."></textarea>
+                    <button type="submit"
+                        class="mt-2 px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700">Comment</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript for Tabs -->
+<script>
+    function openTab(evt, tabName) {
+        // Hide all tab content
+        var tabcontent = document.getElementsByClassName("tab-content");
+        for (var i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+
+        // Remove the active class from all tab links
+        var tablinks = document.querySelectorAll(".active-tab");
+        tablinks.forEach(function (link) {
+            link.classList.remove("border-indigo-600", "text-indigo-600");
+            link.classList.remove("active-tab"); // Remove active class
+        });
+
+        // Show the current tab and add an active class to the clicked tab
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.classList.add("border-indigo-600", "text-indigo-600", "active-tab");
+    }
+
+    // Set the default tab to open
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelector('.tab-content').style.display = 'block';
+    });
+</script>
+
+{% endblock %}

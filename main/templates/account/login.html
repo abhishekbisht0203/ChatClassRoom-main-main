@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static account socialaccount %}
+{% block content %}
+
+<section class="h-full md:h-[86vh] flex items-center justify-center">
+    <div class="bg-gray-100 p-8 rounded-lg shadow-lg w-full max-w-sm">
+        <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">Welcome Back</h2>
+        <!-- Login form -->
+        <form id="login-form" method="POST" action="{% url 'account_login' %}">
+            {% csrf_token %}
+            <div class="mb-4">
+                <label for="username" class="block text-gray-700 font-semibold mb-2">Username</label>
+                <input type="text" id="username" name="login" required
+                    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400">
+            </div>
+            <div class="mb-4">
+                <label for="password" class="block text-gray-700 font-semibold mb-2">Password</label>
+                <input type="password" id="password" name="password" required
+                    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400">
+            </div>
+            <div class="mb-4 flex items-center justify-between">
+                <div>
+                    <input type="checkbox" id="remember_me" name="remember" class="mr-2 leading-tight">
+                    <label for="remember_me" class="text-gray-700">Remember Me</label>
+                </div>
+                <a href="{% url 'account_reset_password' %}"
+                    class="text-indigo-500 hover:text-indigo-700 text-sm">Forgot Password?</a>
+            </div>
+            <button type="submit"
+                class="w-full bg-indigo-500 text-white font-semibold py-2 rounded-lg hover:bg-indigo-600 transition duration-300">Login</button>
+        </form>
+
+        <!-- Social login section -->
+        <div class="mt-6">
+            <p class="text-center text-gray-600">Or login with</p>
+            <div class="flex flex-row gap-4 items-center justify-center w-full mt-4">
+                <a href="{% provider_login_url 'google' %}" class="flex items-center justify-center">
+                    <img src="{% static 'images/google.svg' %}" alt="Google" class="w-6 h-6 ">
+                </a>
+                <a href="{% provider_login_url 'github' %}" class="flex items-center justify-center">
+                    <img src="{% static 'images/github.svg' %}" alt="Google" class="w-7 h-7">
+                </a>
+            </div>
+        </div>
+
+        <!-- Sign up link -->
+        <p class="text-gray-600 text-center mt-6">Don't have an account? <a href="{% url 'account_signup' %}"
+                class="text-indigo-500 hover:text-indigo-700 font-semibold">Sign Up</a></p>
+    </div>
+</section>
+
+{% endblock %}

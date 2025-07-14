@@ -1,0 +1,41 @@
+<!-- edit_profile.html -->
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block content %}
+<div class="container mx-auto mt-10 p-6 max-w-lg bg-white shadow-lg rounded-lg">
+    <h2 class="text-2xl font-bold mb-6 text-center text-gray-800">Edit Profile</h2>
+    <form method="post" enctype="multipart/form-data" class="space-y-5">
+        {% csrf_token %}
+        
+        <!-- Bio Field -->
+        <div class="space-y-1">
+            {{ form.bio.label_tag }}
+            {{ form.bio|add_class:"w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500" }}
+        </div>
+
+        <!-- Profile Picture Field -->
+        <div class="space-y-1">
+            <label class="block text-gray-700">Profile Picture:</label>
+            <div class="flex items-center space-x-4">
+                <!-- Display the current profile picture -->
+                {% if form.instance.pfp %}
+                <img src="{{ form.instance.pfp.url }}" alt="Current Profile Picture" class="w-24 h-24 object-cover rounded-full border border-gray-300">
+                {% else %}
+                <span class="text-gray-500">No current profile picture</span>
+                {% endif %}
+            </div>
+            <label for="id_pfp" class="block mt-3 text-gray-700">Change:</label>
+            {{ form.pfp|add_class:"w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500" }}
+        </div>
+
+        <!-- Submit Button -->
+        <div class="flex justify-center">
+            <button type="submit" class="w-full py-2 px-4 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 transition duration-300">
+                Update Profile
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

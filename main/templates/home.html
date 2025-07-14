@@ -1,0 +1,181 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<!-- Hero Section -->
+<header
+  class="relative text-center py-32 flex items-center bg-gradient-to-r from-purple-700 to-indigo-700 overflow-hidden">
+  <!-- Background Elements -->
+  <div class="absolute inset-0 w-full h-full flex items-center justify-center">
+    <!-- Decorative Circles -->
+    <div class="absolute top-10 left-10 w-32 h-32 bg-purple-900 rounded-full opacity-70 animate-pulse"></div>
+    <div class="absolute bottom-20 right-10 w-48 h-48 bg-pink-900 rounded-full opacity-70 animate-pulse"></div>
+    <!-- Decorative Waves -->
+    <svg class="absolute bottom-0 left-0 w-full h-24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+      <path fill="#4c1d95" fill-opacity="1"
+        d="M0,96L60,128C120,160,240,224,360,213.3C480,203,600,117,720,74.7C840,32,960,32,1080,64C1200,96,1320,160,1380,192L1440,224V320H1380C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320H0Z">
+      </path>
+    </svg>
+  </div>
+
+  <!-- Main Content -->
+  <div class="container relative mx-auto px-6 z-10">
+    <h1 class="text-4xl md:text-6xl font-extrabold text-white mb-6 leading-tight fade-in-up">
+      Welcome to ChatClassRoom
+    </h1>
+    <p class="text-lg md:text-2xl mb-10 text-gray-200 fade-in-up max-w-2xl mx-auto">
+      Where knowledge meets fun, and boredom takes a backseat. Dive in, explore,
+      and let's make learning awesome!
+    </p>
+    <a href="#features"
+      class="inline-block bg-gradient-to-r from-yellow-500 to-red-500 text-white px-6 md:px-10 py-3 md:py-5 rounded-full font-semibold text-base md:text-lg transition-transform duration-300 transform hover:scale-110 shadow-lg">Discover
+      the Magic</a>
+  </div>
+</header>
+
+<!-- Features Section -->
+<section id="features" class="py-16 bg-gradient-to-br from-blue-50 via-white to-blue-100">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-4xl lg:text-5xl font-extrabold text-center text-gray-800 mb-16">
+      What Makes Us Special
+    </h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12">
+      
+      <!-- Feature 1 -->
+      <div class="bg-white rounded-2xl shadow-lg overflow-hidden transform transition-transform hover:scale-105 hover:shadow-2xl">
+        <img src="{% static 'images/notes.png' %}" alt="Epic Notes" 
+          class="w-full h-48 object-cover">
+        <div class="p-6">
+          <h3 class="text-2xl font-bold text-gray-800 mb-3">Epic Notes</h3>
+          <p class="text-gray-600">
+            Forget boring textbooks! Access or upload notes that make studying fun, efficient, and downright exciting.
+          </p>
+        </div>
+      </div>
+
+      <!-- Feature 2 -->
+      <div class="bg-white rounded-2xl shadow-lg overflow-hidden transform transition-transform hover:scale-105 hover:shadow-2xl">
+        <img src="{% static 'images/question.png' %}" alt="Quirky Questions" 
+          class="w-full h-48 object-cover">
+        <div class="p-6">
+          <h3 class="text-2xl font-bold text-gray-800 mb-3">Quirky Questions</h3>
+          <p class="text-gray-600">
+            Ask curious questions or showcase your knowledge by answering. A community buzzing with brainpower awaits!
+          </p>
+        </div>
+      </div>
+
+      <!-- Feature 3 -->
+      <div class="bg-white rounded-2xl shadow-lg overflow-hidden transform transition-transform hover:scale-105 hover:shadow-2xl">
+        <img src="{% static 'images/chat.png' %}" alt="Chatterbox Chat" 
+          class="w-full h-48 object-cover">
+        <div class="p-6">
+          <h3 class="text-2xl font-bold text-gray-800 mb-3">Chatterbox Chat</h3>
+          <p class="text-gray-600">
+            Engage with like-minded learners, share ideas, and have fun while learning. Learning is better together!
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- About Section -->
+<section id="about" class="bg-gradient-to-r from-indigo-500 via-purple-600 to-pink-500 text-white py-16 md:py-24">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-4xl lg:text-5xl font-extrabold text-center mb-12 md:mb-16">
+      Welcome to ChatClassRoom
+    </h2>
+    <div class="max-w-4xl mx-auto bg-white bg-opacity-10 backdrop-blur-md rounded-2xl shadow-xl p-8 md:p-12">
+      <p class="text-lg md:text-xl leading-relaxed text-center">
+        At <span class="font-bold text-yellow-300">ChatClassRoom</span>, we go beyond the basics of learning.
+        This isn’t just a platform—it’s a vibrant community where 
+        <span class="font-bold text-blue-300">curiosity meets creativity</span>, and education becomes an 
+        exciting adventure. Whether you're here to master exams, dive deep into a new topic, 
+        or connect with like-minded learners, we ensure that every moment is inspiring, fun, and 
+        rewarding. 
+      </p>
+      <p class="mt-4 text-lg md:text-xl text-center">
+        Join us, and let’s turn learning into something unforgettable. Because here, you’re not 
+        just a student—you’re part of a tribe that’s changing the way the world learns.
+      </p>
+    </div>
+    <div class="mt-12 md:mt-16 text-center">
+      <a href="#features"
+        class="inline-block bg-yellow-400 text-indigo-900 font-semibold px-8 py-4 rounded-full shadow-lg hover:bg-yellow-500 hover:shadow-xl transition-transform duration-300 transform hover:scale-110">
+        Explore Our Features
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="py-16 md:py-24 bg-gradient-to-r from-blue-50 via-white to-blue-100">
+  <div class="container mx-auto px-6 lg:px-12">
+    <h2 class="text-4xl md:text-5xl font-extrabold text-center text-blue-900 mb-8 md:mb-12 fade-in-up">
+      Get in Touch
+    </h2>
+    <p class="text-center text-lg md:text-xl text-gray-700 mb-10 fade-in-up">
+      Have a question, feedback, or just want to say hello? We’d love to hear from you. Drop us a line below!
+    </p>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-start fade-in-up">
+      <!-- Left Side: Contact Form -->
+      <form class="bg-white p-8 md:p-12 rounded-xl shadow-lg">
+        <div class="mb-6">
+          <label for="name" class="block text-sm font-semibold mb-2 text-gray-700">Your Name</label>
+          <input type="text" id="name" name="name"
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Your full name" required />
+        </div>
+        <div class="mb-6">
+          <label for="email" class="block text-sm font-semibold mb-2 text-gray-700">Email Address</label>
+          <input type="email" id="email" name="email"
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Your email address" required />
+        </div>
+        <div class="mb-6">
+          <label for="message" class="block text-sm font-semibold mb-2 text-gray-700">Message</label>
+          <textarea id="message" name="message" rows="6"
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Your message here..." required></textarea>
+        </div>
+        <button type="submit"
+          class="w-full bg-blue-600 text-white py-3 rounded-full font-semibold hover:bg-blue-700 transition duration-300">
+          Send Message
+        </button>
+      </form>
+
+      <!-- Right Side: Contact Info -->
+      <div class="text-center md:text-left">
+        <h3 class="text-2xl md:text-3xl font-bold text-blue-800 mb-4">Reach Out to Us</h3>
+        <p class="text-gray-700 text-lg mb-4">
+          We’re here to help and answer any question you might have. Feel free to reach out via this form or
+          contact us directly!
+        </p>
+        <ul class="text-gray-700 space-y-3">
+          <li><strong>Email:</strong> <a href="abhishekbisht0203@gmail.com"
+              class="text-blue-600 hover:underline">abhishekbisht0203@gmail.com</a></li>
+          <li><strong>Phone:</strong> <a href="tel:+91 7456849590" class="text-blue-600 hover:underline">+91 7456849590</a></li>
+          <li><strong>Address:</strong> dist. Nainital Uttarakhand, India 263001</li>
+        </ul>
+        <div class="mt-8">
+          <h4 class="text-xl font-semibold text-blue-800 mb-3">Follow Us</h4>
+          <div class="flex justify-center md:justify-start space-x-4">
+            <a href="https://www.facebook.com/abhishek.bisht.946954/" class="text-blue-600 hover:text-blue-700"><i class="fab fa-facebook fa-2x"></i></a>
+            <a href="https://github.com/abhishekbisht0203" target="_blank" class="text-gray-800 hover:text-gray-900">
+  <i class="fab fa-github fa-2x"></i>
+</a>
+
+            <a href="https://www.instagram.com/_.abhishekbisht._/" class="text-blue-600 hover:text-blue-700"><i class="fab fa-instagram fa-2x"></i></a>
+            <a href="https://www.linkedin.com/feed/?trk=guest_homepage-basic_nav-header-signin" class="text-blue-600 hover:text-blue-700"><i class="fab fa-linkedin fa-2x"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+{% endblock %}

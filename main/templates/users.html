@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<section class="container mx-auto px-4 py-6">
+    <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">Users</h1>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- User Item -->
+        {% for user, room_name in users_with_room %}
+        <a href="{% url 'chat' room_name %}" class="bg-white rounded-lg shadow-lg overflow-hidden transform transition duration-300 hover:scale-105">
+            <div class="flex items-center p-4 cursor-pointer hover:bg-gray-100 transition">
+                {% if user.userprofile.pfp %}
+                <img src="{{ user.userprofile.pfp.url }}" alt=""
+                    class="h-16 w-16 rounded-full shadow-md shadow-gray-500 object-cover">
+                {% else %}
+                <img src="https://api.dicebear.com/9.x/adventurer-neutral/svg?seed={{ user.username }}" alt=""
+                    class="h-16 w-16 rounded-full shadow-md shadow-gray-500 object-cover">
+                {% endif %}
+                <div class="ml-4">
+                    {% if user.first_name %}
+                    <h2 class="text-lg font-semibold text-gray-800">{{ user.first_name }} {{ user.last_name }}</h2>
+                    {% else %}
+                    <h2 class="text-lg font-semibold text-gray-800">{{ user.username }}</h2>
+                    {% endif %}
+                    <p class="text-gray-600">@{{ user.username }}</p>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</section>
+
+{% endblock %}

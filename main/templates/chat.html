@@ -1,0 +1,173 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<style>
+    @keyframes slide-left {
+        0% {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        100% {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+
+    @keyframes slide-right {
+        0% {
+            transform: translateX(-100%);
+            opacity: 0;
+        }
+        100% {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+
+    .animate-slide-left {
+        animation: slide-left 0.3s ease-in-out;
+    }
+
+    .animate-slide-right {
+        animation: slide-right 0.3s ease-in-out;
+    }
+</style>
+
+<section class="flex h-[calc(100vh-11vh)] bg-gradient-to-r from-gray-50 to-gray-100">
+    <!-- Sidebar -->
+    <div class="hidden md:block w-1/3 sidebar p-10 bg-gradient-to-tl from-blue-500 to-indigo-600 text-white shadow-lg rounded-tr-lg rounded-br-lg transition-all transform duration-500">
+        <div class="user-detail flex flex-col gap-10 items-center justify-center">
+            {% if user.userprofile.pfp %}
+            <img src="{{user.userprofile.pfp.url}}" alt=""
+                class="h-40 w-40 rounded-full shadow-xl shadow-indigo-700 object-cover border-4 border-white transition-transform transform hover:scale-110 hover:shadow-2xl duration-300">
+            {% else %}
+            <img src="https://api.dicebear.com/9.x/adventurer-neutral/svg?seed={{user.username}}" alt=""
+                class="h-40 w-40 rounded-full shadow-xl shadow-indigo-700 object-cover border-4 border-white transition-transform transform hover:scale-110 hover:shadow-2xl duration-300">
+            {% endif %}
+            <div class="flex flex-col items-center gap-4 text-center transition-all duration-300 p-4 rounded-lg">
+                <h3 class="text-3xl font-semibold text-white">{{user.first_name}} {{user.last_name}}</h3>
+                <h4 class="text-xl font-semibold text-indigo-200">@{{user.username }}</h4>
+                <p class="text-sm text-indigo-100">{{user.bio}}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chat Area -->
+    <div class="flex-1 flex flex-col chat-container">
+        <!-- Header -->
+        <div class="bg-gradient-to-r from-blue-500 to-indigo-500 shadow-md p-4 rounded-t-lg text-white transition-all duration-500 transform hover:shadow-lg">
+            <h2 class="text-2xl font-bold tracking-wider">{{ user.first_name }} {{ user.last_name }}</h2>
+            
+        </div>
+        
+        <!-- Messages Section -->
+        <div id="chat-messages" class="flex-1 p-4 space-y-4 overflow-y-auto bg-gray-50 shadow-inner rounded-b-lg">
+            {% for message in messages %}
+                {% if message.sender == request.user %}
+                    <!-- Outgoing Message -->
+                    <div class="flex justify-start items-start gap-2.5 mb-4 group p-2 rounded-lg transition-all transform duration-300">
+                        {% if message.sender.userprofile.pfp %}
+                            <img src="{{ message.sender.userprofile.pfp.url }}" alt=""
+                                class="w-8 h-8 rounded-full shadow-md shadow-gray-600 object-cover transition-transform transform hover:scale-110">
+                        {% else %}
+                            <img src="https://api.dicebear.com/9.x/adventurer-neutral/svg?seed={{ message.sender.username }}" alt=""
+                                class="w-8 h-8 rounded-full shadow-md shadow-gray-600 object-cover transition-transform transform hover:scale-110">
+                        {% endif %}
+                        <div class="flex flex-col gap-1 w-fit max-w-[500px] animate-slide-right">
+                            <div class="flex items-center space-x-2 rtl:space-x-reverse">
+                                <span class="text-sm font-semibold text-gray-900">You</span>
+                                <span class="text-xs font-normal text-gray-500">{{ message.sent_at|date:"H:i" }}</span>
+                            </div>
+                            <div class="flex flex-col leading-1.5 p-4 bg-blue-100 rounded-xl shadow-inner transition-transform transform">
+                                <p class="text-sm font-normal text-gray-900">{{ message.content }}</p>
+                            </div>
+                            <span class="text-xs font-normal text-gray-400">Delivered</span>
+                        </div>
+                    </div>
+                {% else %}
+                    <!-- Incoming Message -->
+                    <div class="flex justify-end items-start gap-2.5 mb-4 group p-2 rounded-lg transition-transform transform duration-300">
+                        <div class="flex flex-col gap-1 w-fit max-w-[500px] animate-slide-left text-right">
+                            <div class="flex justify-end items-center space-x-2 rtl:space-x-reverse">
+                                <span class="text-xs font-normal text-gray-500">{{ message.sent_at|date:"H:i" }}</span>
+                                <span class="text-sm font-semibold text-gray-900">{{ message.sender.first_name }} {{ message.sender.last_name }}</span>
+                            </div>
+                            <div class="flex flex-col leading-1.5 p-4 bg-green-100 rounded-xl shadow-inner transition-transform transform">
+                                <p class="text-sm font-normal text-gray-900">{{ message.content }}</p>
+                            </div>
+                            <span class="text-xs font-normal text-gray-400">Delivered</span>
+                        </div>
+                        {% if message.sender.userprofile.pfp %}
+                            <img src="{{ message.sender.userprofile.pfp.url }}" alt=""
+                                class="w-8 h-8 rounded-full shadow-md shadow-gray-600 object-cover transition-transform transform hover:scale-110">
+                        {% else %}
+                            <img src="https://api.dicebear.com/9.x/adventurer-neutral/svg?seed={{ message.sender.username }}" alt=""
+                                class="w-8 h-8 rounded-full shadow-md shadow-gray-600 object-cover transition-transform transform hover:scale-110">
+                        {% endif %}
+                    </div>
+                {% endif %}
+            {% empty %}
+                <p class="text-center text-gray-500">No messages yet.</p>
+            {% endfor %}
+        </div>
+
+        <!-- Chat Form -->
+        <form id="chat-form" class="bg-white p-4 flex items-center space-x-2 border-t shadow-md rounded-b-lg">
+            <div class="relative flex w-full">
+                <input type="text" id="message-input" placeholder=" " required autocomplete="off"
+                    class="flex-1 border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-transform transform peer">
+                <label for="message-input"
+                    class="absolute left-3 text-gray-400 transform -translate-y-6 transition-all peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-3  peer-focus:-translate-y-8">Type your message...</label>
+            </div>
+            <button type="submit"
+                class="bg-gradient-to-r from-blue-500 to-indigo-500 text-white px-6 py-3 rounded-lg hover:shadow-2xl transition-transform transform hover:scale-110 focus:ring-2 focus:ring-blue-500">
+                Send
+            </button>
+        </form>
+    </div>
+</section>
+
+
+
+<script>
+    $(document).ready(function() { 
+        const chatboxContent = $('#chat-messages');
+        scrollToBottom()
+        $("form").on('submit', function(e) {  
+            e.preventDefault();
+            const messageInput = $('#message-input');
+            const message = messageInput.val();
+            const receiverId = "{{ user.id }}"
+            $.ajax({    
+                type: "POST",
+                url: "{% url 'send_message' %}",
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}'  // Include the CSRF token
+                },
+                data: {
+                    'receiver_id': receiverId,  // Use the global variable receiverId
+                    'content': message,
+                },
+                dataType: "json",
+                success: function(data) {
+                    if (data.success) {
+                        messageInput.val('');  // Clear input field after successful send
+                        window.location.reload();  // Reload messages after sending
+                        scrollToBottom()
+                    } else {
+                        console.log('Error: Message not sent');
+                    }
+                },
+                error: function(data) {
+                    console.log('Error:', data);
+                }
+            });
+          })
+          
+     function scrollToBottom() {
+            chatboxContent.scrollTop(chatboxContent[0].scrollHeight);
+        }
+     })
+
+</script>
+{% endblock %}
